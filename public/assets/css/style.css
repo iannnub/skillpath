@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+    --bg-dark: #0f1115;
+    --bg-card: #181b21;
+    --text-light: #f8f9fa;
+    --text-muted: #9ca3af;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(24, 27, 33, 0.75);
+    
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    --border-radius-xl: 24px;
+    
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.25);
+    --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Components */
+.glass-navbar {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--card-shadow);
+}
+
+/* Base Components */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(13, 110, 253, 0.4);
+}
+
+.iconic-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-xl);
+}
+
+.iconic-card .icon-bg {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    font-size: 8rem;
+    opacity: 0.05;
+    transform: rotate(-15deg);
+    transition: all 0.3s ease;
+}
+
+.iconic-card:hover .icon-bg {
+    transform: rotate(0) scale(1.1);
+    opacity: 0.1;
+}
+
+/* Nav & Sidebar */
+.nav-link {
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.sidebar {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    min-height: calc(100vh - 100px);
+}
+
+.sidebar .nav-link {
+    color: var(--text-muted);
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 8px;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+}
+
+/* Forms & Floating Labels */
+.form-control, .form-select {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    border-radius: var(--border-radius-md);
+}
+
+/* PERBAIKAN: Kontras Dropdown di Dark Mode */
+select.form-select option {
+    background-color: #181b21 !important; /* Warna bg-card */
+    color: #ffffff !important;
+    padding: 10px;
+}
+
+/* Perbaikan saat input difokuskan */
+.form-control:focus, .form-select:focus {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Perbaikan untuk input yang dipaksa berwarna terang oleh browser/bootstrap */
+.bg-white.text-dark {
+    color: #212529 !important;
+    background-color: #ffffff !important;
+}
+
+.form-floating > label { color: var(--text-muted); }
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: var(--primary-color) !important;
+    background-color: transparent;
+}
+
+/* Rating Stars */
+.rating-stars label {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.rating-stars label:hover {
+    transform: scale(1.2);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(13, 110, 253, 0.3);
+}
+
+.btn-emerald {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+.btn-emerald:hover {
+    background-color: #059669;
+    color: white;
+}
+
+/* Progress */
+.progress {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+}
+.progress-bar {
+    background-color: var(--success-color);
+    border-radius: 20px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tables (Borderless) */
+.table-borderless > :not(caption) > * > * {
+    border-bottom-width: 0;
+    padding: 1.25rem 1rem;
+    background-color: transparent;
+    color: var(--text-light);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Custom Utils */
+.text-emerald { color: var(--success-color) !important; }
+.bg-emerald { background-color: var(--success-color) !important; }
+.bg-darker { background-color: var(--bg-card) !important; }
