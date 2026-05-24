@@ -310,43 +310,9 @@ public function certificate($roadmap_id) {
 }
 
 public function submit_review() {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $roadmap_id = $_POST['roadmap_id'];
-        $student_id = $_SESSION['user_id'];
-        $rating = $_POST['rating'];
-        $comment = htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8');
-
-        $db = Database::getInstance()->getConnection();
-        
-        // Cek apakah user sudah pernah memberi ulasan untuk roadmap ini
-        $stmtCheck = $db->prepare("SELECT id FROM reviews WHERE student_id = ? AND roadmap_id = ?");
-        $stmtCheck->execute([$student_id, $roadmap_id]);
-        
-        if ($stmtCheck->fetch()) {
-            // Update ulasan jika sudah ada
-            $query = "UPDATE reviews SET rating = :rating, comment = :comment WHERE student_id = :sid AND roadmap_id = :rid";
-        } else {
-            // Input ulasan baru
-            $query = "INSERT INTO reviews (student_id, roadmap_id, rating, comment) VALUES (:sid, :rid, :rating, :comment)";
-        }
-
-        $stmt = $db->prepare($query);
-        $result = $stmt->execute([
-            'sid' => $student_id,
-            'rid' => $roadmap_id,
-            'rating' => $rating,
-            'comment' => $comment
-        ]);
-
-        if ($result) {
-            Flasher::setFlash('Terima Kasih!', 'Ulasan Anda sangat berarti bagi kami.', 'success');
-        } else {
-            Flasher::setFlash('Gagal', 'Terjadi kesalahan saat mengirim ulasan.', 'danger');
-        }
-        
-        header('Location: ' . BASEURL . '/student/dashboard');
-        exit;
-    }
+    Flasher::setFlash('Informasi', 'Fitur ulasan telah dinonaktifkan.', 'info');
+    header('Location: ' . BASEURL . '/student/dashboard');
+    exit;
 }
 
 public function add_comment() {

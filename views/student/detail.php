@@ -13,16 +13,8 @@
                     <img src="<?= ASSET_BASEURL; ?>/assets/img/roadmaps/<?= $data['roadmap']['thumbnail']; ?>" class="img-fluid w-100 object-fit-cover" style="min-height: 100%; aspect-ratio: 4/3;" alt="Thumbnail">
                 </div>
                 <div class="col-md-7 p-4 p-md-5 d-flex flex-column justify-content-center h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="mb-2">
                         <h1 class="fw-bolder display-6 mb-0 text-light" style="line-height: 1.2;"><?= htmlspecialchars($data['roadmap']['title']); ?></h1>
-                        <?php 
-                            $stats = $this->model('RoadmapModel')->getAverageRating($data['roadmap']['id']);
-                            if($stats['total_reviews'] > 0) : 
-                        ?>
-                            <div class="badge bg-warning text-dark rounded-pill px-3 py-2 d-flex align-items-center fw-bold">
-                                <i class="bi bi-star-fill me-1"></i> <?= round($stats['avg_rating'], 1); ?>
-                            </div>
-                        <?php endif; ?>
                     </div>
                     <p class="text-muted fs-6 mb-4 lh-lg"><?= htmlspecialchars($data['roadmap']['description']); ?></p>
                     
@@ -78,40 +70,5 @@
             <?php endif; ?>
         </div>
 
-        <h4 class="fw-bold mb-4 text-light mt-5"><i class="bi bi-star-fill text-warning me-2"></i> Apa Kata Mereka?</h4>
-        <div class="row g-4 mb-5">
-            <?php 
-                $reviews = $this->model('RoadmapModel')->getReviewsByRoadmap($data['roadmap']['id']);
-                if(empty($reviews)) : 
-            ?>
-                <div class="col-12 text-center py-4 card glass-card border-secondary border-opacity-25">
-                    <p class="text-muted fst-italic mb-0">Belum ada ulasan untuk roadmap ini. Jadilah yang pertama memberikan kesan!</p>
-                </div>
-            <?php else : ?>
-                <?php foreach($reviews as $rev) : ?>
-                    <div class="col-md-6">
-                        <div class="card glass-card border-secondary p-4 h-100 shadow-sm border-opacity-25">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-2" style="width: 35px; height: 35px; font-size: 0.8rem;">
-                                        <?= strtoupper(substr($rev['username'], 0, 1)); ?>
-                                    </div>
-                                    <div>
-                                        <div class="text-light fw-bold small"><?= htmlspecialchars($rev['username']); ?></div>
-                                        <div class="text-muted" style="font-size: 0.7rem;"><?= date('d M Y', strtotime($rev['created_at'])); ?></div>
-                                    </div>
-                                </div>
-                                <div class="text-warning small">
-                                    <?php for($i=1; $i<=5; $i++) : ?>
-                                        <i class="bi bi-star<?= ($i <= $rev['rating']) ? '-fill' : ''; ?>"></i>
-                                    <?php endfor; ?>
-                                </div>
-                            </div>
-                            <p class="text-light small mb-0" style="line-height: 1.6; font-style: italic;">"<?= htmlspecialchars($rev['comment']); ?>"</p>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
     </div>
 </div>

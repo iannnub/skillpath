@@ -70,60 +70,14 @@
                                 </div>
                                 
                                 <div class="d-grid gap-2">
-                                    <a href="<?= BASEURL; ?>/student/learn/<?= $rm['id']; ?>" class="btn rounded-pill fw-bold shadow-sm <?= $rm['user_progress'] == 100 ? 'btn-outline-success' : 'btn-primary'; ?>">
-                                        <?php if($rm['user_progress'] == 100): ?>
-                                            <i class="bi bi-arrow-repeat me-1"></i> Ulangi Materi
-                                        <?php else: ?>
-                                            Lanjut Belajar <i class="bi bi-arrow-right ms-1"></i>
-                                        <?php endif; ?>
+                                    <a href="<?= BASEURL; ?>/student/learn/<?= $rm['id']; ?>" class="btn btn-primary rounded-pill fw-bold shadow-sm">
+                                        Lanjut Belajar <i class="bi bi-arrow-right ms-1"></i>
                                     </a>
 
                                     <?php if($rm['user_progress'] == 100) : ?>
-                                        <div class="row g-2">
-                                            <div class="col-6">
-                                                <button class="btn btn-sm btn-outline-warning w-100 rounded-pill fw-bold" data-bs-toggle="modal" data-bs-target="#modalReview<?= $rm['id']; ?>">
-                                                    <i class="bi bi-star-fill me-1"></i> Ulasan
-                                                </button>
-                                            </div>
-                                            <div class="col-6">
-                                                <a href="<?= BASEURL; ?>/student/certificate/<?= $rm['id']; ?>" target="_blank" class="btn btn-sm btn-emerald w-100 rounded-pill fw-bold">
-                                                    <i class="bi bi-award me-1"></i> Sertifikat
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal fade review-modal" id="modalReview<?= $rm['id']; ?>" tabindex="-1" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content glass-card border-secondary text-light">
-                                                    <form action="<?= BASEURL; ?>/student/submit_review" method="POST">
-                                                        <div class="modal-header border-secondary">
-                                                            <h5 class="modal-title fw-bold">Beri Ulasan Roadmap</h5>
-                                                            <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <input type="hidden" name="roadmap_id" value="<?= $rm['id']; ?>">
-                                                            <div class="mb-4 text-center">
-                                                                <label class="form-label d-block text-muted small fw-bold text-uppercase mb-3">Rating Anda</label>
-                                                                <div class="rating-stars fs-2">
-                                                                    <?php for($i=5; $i>=1; $i--) : ?>
-                                                                        <input type="radio" name="rating" value="<?= $i; ?>" id="star-<?= $rm['id']; ?>-<?= $i; ?>" class="d-none rating-input" required>
-                                                                        <label for="star-<?= $rm['id']; ?>-<?= $i; ?>" class="bi bi-star text-muted rating-star-label" style="cursor:pointer;"></label>
-                                                                    <?php endfor; ?>
-                                                                </div>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label text-muted small fw-bold">Komentar / Pengalaman Belajar</label>
-                                                                <textarea name="comment" class="form-control bg-dark border-secondary text-light" rows="3" placeholder="Apa yang Anda pelajari dari roadmap ini?"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer border-secondary">
-                                                            <button type="button" class="btn btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Kirim Ulasan</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <a href="<?= BASEURL; ?>/student/certificate/<?= $rm['id']; ?>" target="_blank" class="btn btn-sm btn-emerald w-100 rounded-pill fw-bold">
+                                            <i class="bi bi-award me-1"></i> Sertifikat
+                                        </a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -135,55 +89,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    /* Styling khusus untuk rating stars */
-    .rating-stars {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
-        gap: 10px;
-    }
-    .rating-stars label {
-        transition: transform 0.2s ease, color 0.2s ease;
-    }
-    .rating-stars label:hover {
-        transform: scale(1.2);
-    }
-    .rating-stars input:checked ~ label,
-    .rating-stars label.active,
-    .rating-stars label.active ~ label {
-        color: #ffc107 !important;
-    }
-</style>
-
-<script>
-    // Gunakan Event Delegation agar tidak bentrok antar modal
-    document.addEventListener('click', function(e) {
-        if(e.target.classList.contains('rating-star-label')) {
-            const label = e.target;
-            const container = label.parentElement;
-            const allLabels = container.querySelectorAll('.rating-star-label');
-            
-            // Reset state visual di container modal ini saja
-            allLabels.forEach(l => {
-                l.classList.remove('bi-star-fill', 'text-warning', 'active');
-                l.classList.add('bi-star', 'text-muted');
-            });
-            
-            // Set bintang yang diklik jadi aktif
-            label.classList.add('bi-star-fill', 'text-warning', 'active');
-            label.classList.remove('bi-star', 'text-muted');
-            
-            // Nyalakan semua bintang di sebelah "kanannya" (karena row-reverse)
-            let prev = label.nextElementSibling;
-            while(prev) {
-                if(prev.tagName === 'LABEL') {
-                    prev.classList.add('bi-star-fill', 'text-warning', 'active');
-                    prev.classList.remove('bi-star', 'text-muted');
-                }
-                prev = prev.nextElementSibling;
-            }
-        }
-    });
-</script>

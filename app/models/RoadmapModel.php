@@ -164,28 +164,4 @@ public function updateStatus($id, $status) {
     return $stmt->execute(['id' => $id, 'status' => $status]);
 }
 
-// Ambil rata-rata rating dari tabel reviews
-public function getAverageRating($id) {
-    $query = "SELECT AVG(rating) as avg_rating, COUNT(*) as total_reviews 
-              FROM reviews WHERE roadmap_id = :id";
-    $stmt = $this->db->prepare($query);
-    $stmt->execute(['id' => $id]);
-    $result = $stmt->fetch();
-    return [
-        'avg_rating' => $result['avg_rating'] ?? 0,
-        'total_reviews' => $result['total_reviews'] ?? 0
-    ];
-}
-
-// Ambil semua review beserta username untuk ditampilkan di detail.php
-public function getReviewsByRoadmap($id) {
-    $query = "SELECT rv.*, u.username 
-              FROM reviews rv 
-              JOIN users u ON rv.student_id = u.id 
-              WHERE rv.roadmap_id = :id 
-              ORDER BY rv.created_at DESC";
-    $stmt = $this->db->prepare($query);
-    $stmt->execute(['id' => $id]);
-    return $stmt->fetchAll();
-}
 }
